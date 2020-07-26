@@ -55,23 +55,39 @@ const lazyLoad = (target) => {
 
 // Add class 'active' to navbar when scroll
 function navLinksActivate() {
-  const navLinks = document.querySelectorAll(".menu__link");
+    window.onscroll= function(){
+        const navLinks = document.querySelectorAll(".menu__link");
+        const winScroll = window.scrollY;
+        navLinks.forEach((link)=>{
+            link.classList.remove("active");
+            const linkHref = link.getAttribute("href");
+            sections.forEach((sec)=>{
+                if(winScroll >= sec.offsetTop && linkHref == `#${sec.id}`){
+                    navLinks.forEach((link)=>{
+                        link.classList.remove("active");
+                    })
+                    link.classList.add("active");
+                }
 
-  navLinks.forEach((link) => {
-    $(window).scroll(function () {
-      let windowScroll = $(window).scrollTop();
-      let linkHref = $(link).attr("href");
-      let secOffset = $(linkHref).offset().top;
-
-      if (windowScroll >= secOffset - 1) {
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-        });
-        link.classList.add("active");
-      }
-    });
-  });
+            })
+        })
+    }
 }
+
+//  navLinks.forEach((link) => {
+//    $(window).scroll(function () {
+//      let windowScroll = $(window).scrollTop();
+//      let linkHref = $(link).attr("href");
+//      let secOffset = $(linkHref).offset().top;
+//
+//      if (windowScroll >= secOffset - 1) {
+//        navLinks.forEach((link) => {
+//          link.classList.remove("active");
+//        });
+//        link.classList.add("active");
+//      }
+//    });
+//  });
 
 // Scroll to anchor ID using scrollTO event
 
